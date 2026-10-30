@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Riqueza Gastronómica de Bolivia</title>
+
+  <meta name="description" content="Página educativa sobre los platos típicos, recetas y preservación de la gastronomía boliviana.">
+
+  <style>
+    :root {
+      --terracota: #a9432b;
+      --rojo: #7f2e24;
+      --naranja: #e88b3a;
+      --crema: #fff5e6;
+      --arena: #f2dfc4;
+      --cafe: #432c23;
+      --verde: #536b45;
+      --blanco: #fffdf9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--crema);
+      color: var(--cafe);
+      line-height: 1.65;
+      padding-top: 70px; /* Espacio para compensar el menú fijo superior */
+    }
+
+    /* MENÚ DE NAVEGACIÓN FIJO */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 7%;
+      background: rgba(43, 28, 23, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: white;
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: .45rem .6rem;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    nav a:hover {
+      color: #301d15;
+      background: #ffd49b;
+    }
+
+    /* Botón hamburguesa para móviles (oculto en escritorio) */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 5px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    /* HEADER / HERO */
+    header {
+      color: white;
+      background: linear-gradient(120deg, #432c23, #a9432b);
+      min-height: calc(75vh - 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero {
+      width: min(1100px, 90%);
+      margin: auto;
+      padding: 4rem 0;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #ffd49b;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 6vw, 5rem);
+      line-height: 1.1;
+      margin: .8rem 0;
+      max-width: 900px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      font-size: 1.15rem;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--naranja);
+      color: #301d15;
+      padding: .8rem 1.2rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 800;
+      margin-top: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+    }
+
+    section {
+      padding: 4rem 7%;
+      scroll-margin-top: 80px; /* Para que al hacer click en el menú no tape el título */
+    }
+
+    .section-inner {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .section-heading {
+      max-width: 800px;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      line-height: 1.2;
+      color: var(--rojo);
+    }
+
+    h3 {
+      color: var(--rojo);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .intro-grid img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .note {
+      border-left: 5px solid var(--naranja);
+      background: #fffaf2;
+      padding: 1rem;
+      border-radius: 0 12px 12px 0;
+      margin-top: 1rem;
+    }
+
+    /* PLATOS TÍPICOS */
+    .dishes {
+      background: var(--arena);
+    }
+
+    .dish-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .dish-card {
+      background: var(--blanco);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px #5d33201a;
+      transition: transform .2s;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .dish-card img {
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #ead3b7;
+    }
+
+    .dish-content {
+      padding: 1.2rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #f8e0c1;
+      color: var(--rojo);
+      border-radius: 20px;
+      padding: .2rem .65rem;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    /* RECETAS */
+    .recipes {
+      background: #fffaf2;
+    }
+
+    .recipe-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .recipe {
+      padding: 1.5rem;
+      border: 1px solid #ead3b7;
+      border-radius: 18px;
+      background: white;
+    }
+
+    .recipe h4 {
+      color: var(--verde);
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .recipe li, .recipe p {
+      margin-bottom: .4rem;
+    }
+
+    /* PRESERVACIÓN */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .step {
+      padding: 1.4rem;
+      border-radius: 16px;
+      background: #fffaf2;
+      border: 1px solid #ead3b7;
+    }
+
+    .step-number {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--naranja);
+    }
+
+    /* COMPROMISO */
+    .promise {
+      color: white;
+      background: linear-gradient(120deg, #7f2e24, #a9432b);
+      text-align: center;
+    }
+
+    .promise h2 {
+      color: white;
+    }
+
+    .promise p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      padding: 2rem 7%;
+      text-align: center;
+      background: #33221b;
+      color: #fbe9d3;
+    }
+
+    footer a {
+      color: #ffd49b;
+    }
+
+    /* MEDIA QUERIES PARA ADAPTABILIDAD MÓVIL */
+    @media (max-width: 900px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(43, 28, 23, 0.98);
+        padding: 1rem 1.5rem;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      nav ul li a {
+        display: block;
+        padding: 0.7rem 1rem;
+      }
+
+      .intro-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      section {
+        padding: 3rem 5%;
+      }
+
+      .hero {
+        padding: 3rem 0;
+      }
+
+      .dish-card img {
+        height: 200px;
+      }
+
+      .intro-grid img {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">🇧🇴 SABORES DE BOLIVIA</div>
+
+    <!-- Botón hamburguesa para móviles -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul id="navMenu">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#historia">Nuestra cocina</a></li>
+      <li><a href="#platos">Platos típicos</a></li>
+      <li><a href="#recetas">Recetas</a></li>
+      <li><a href="#preservar">Preservación</a></li>
+      <li><a href="#compromiso">Compromiso</a></li>
+    </ul>
+  </nav>
+
+  <header id="inicio">
+    <div class="hero">
+      <span class="eyebrow">Tradición · Cultura · Identidad</span>
+
+      <h1>Riqueza gastronómica de Bolivia</h1>
+
+      <p>
+        Conoce los sabores de nuestro país, sus platos típicos,
+        recetas tradicionales y la importancia de conservar
+        nuestra herencia gastronómica para las futuras generaciones.
+      </p>
+
+      <a class="button" href="#platos">Descubrir nuestros platos</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="historia">
+      <div class="section-inner intro-grid">
+
+        <div>
+          <span class="eyebrow" style="color:#a9432b">
+            Nuestra identidad
+          </span>
+
+          <h2>La gastronomía boliviana</h2>
+
+          <p>
+            La gastronomía de Bolivia es muy variada porque cada región
+            tiene sus propios ingredientes, costumbres y formas de cocinar.
+            Sus platos representan la historia y la identidad de nuestro pueblo.
+          </p>
+
+          <p>
+            En el altiplano se utilizan productos como la papa, el chuño
+            y la quinua. En los valles destacan el maíz y las verduras,
+            mientras que en el oriente se aprovechan la yuca, el plátano
+            y otros productos tropicales.
+          </p>
+
+          <div class="note">
+            <strong>¿Por qué debemos cuidarla?</strong>
+            Porque cada receta guarda conocimientos, recuerdos y tradiciones
+            que debemos transmitir a las nuevas generaciones.
+          </div>
+        </div>
+
+        <img
+          src="imagenes/mani.jpg"
+          alt="Sopa de maní tradicional boliviana"
+          loading="lazy"
+        >
+
+      </div>
+    </section>
+
+    <section class="dishes" id="platos">
+      <div class="section-inner">
+
+        <div class="section-heading">
+          <span class="eyebrow" style="color:#a9432b">
+            Sabores de nuestra tierra
+          </span>
+
+          <h2>Platos típicos de Bolivia</h2>
+
+          <p>
+            Cada departamento tiene preparaciones especiales que
+            representan su cultura y sus ingredientes tradicionales.
+          </p>
+        </div>
+
+        <div class="dish-grid">
+
+          <article class="dish-card">
+            <img
+              src="imagenes/saltena.jpg"
+              alt="Salteñas bolivianas"
+              loading="lazy"
+            >
+            <div class="dish-content">
+              <span class="tag">Tradición</span>
+              <h3>Salteña</h3>
+              <p>
+                Empanada horneada con relleno jugoso de carne o pollo,
+                papa, verduras y condimentos. Es muy popular como
+                desayuno o merienda.
+              </p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <img
+              src="imagenes/chairo.jpg"
+              alt="Chairo paceño"
+              loading="lazy"
+            >
+            <div class="dish-content">
+              <span class="tag">La Paz</span>
+              <h3>Chairo</h3>
+              <p>
+                Sopa tradicional preparada con ingredientes como chuño,
+                papa, verduras, hierbas y carne, según la receta regional.
+              </p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <img
+              src="imagenes/pique.jpg"
+              alt="Pique macho"
+              loading="lazy"
+            >
+            <div class="dish-content">
+              <span class="tag">Cochabamba</span>
+              <h3>Pique macho</h3>
+              <p>
+                Plato abundante que combina carne, salchicha, papa frita,
+                cebolla y locoto. Se comparte en reuniones familiares.
+              </p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <img
+              src="imagenes/majadito.jpg"
+              alt="Majadito boliviano"
+              loading="lazy"
+            >
+            <div class="dish-content">
+              <span class="tag">Oriente</span>
+              <h3>Majadito</h3>
+              <p>
+                Preparación oriental que suele llevar arroz, charque
+                o carne y acompañamientos como huevo y plátano frito.
+              </p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <img
+              src="imagenes/tamal.jpg"
+              alt="Comida tradicional boliviana"
+              loading="lazy"
+            >
+            <div class="dish-content">
+              <span class="tag">Valles</span>
+              <h3>Humintas</h3>
+              <p>
+                Preparación a base de choclo que puede ser dulce o salada.
+                Se cocina al horno o al vapor, según la costumbre regional.
+              </p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <img
+              src="imagenes/api.jpg"
+              alt="Api morado boliviano"
+              loading="lazy"
+            >
+            <div class="dish-content">
+              <span class="tag">Bebida tradicional</span>
+              <h3>Api morado</h3>
+              <p>
+                Bebida caliente preparada con maíz morado, especias
+                y azúcar. Es especialmente apreciada durante las mañanas frías.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="recipes" id="recetas">
+      <div class="section-inner">
+
+        <div class="section-heading">
+          <span class="eyebrow" style="color:#a9432b">
+            Aprende y comparte
+          </span>
+
+          <h2>Recetas tradicionales</h2>
+
+          <p>
+            Estas recetas sencillas nos ayudan a conocer algunos
+            sabores de Bolivia y a transmitirlos a otras generaciones.
+          </p>
+        </div>
+
+        <div class="recipe-list">
+
+          <article class="recipe">
+            <h3>Humintas al horno</h3>
+            <h4>Ingredientes</h4>
+            <ul>
+              <li>Choclo tierno desgranado.</li>
+              <li>Queso fresco.</li>
+              <li>Mantequilla o aceite.</li>
+              <li>Sal al gusto.</li>
+              <li>Chalas limpias, si están disponibles.</li>
+            </ul>
+            <h4>Preparación</h4>
+            <ol>
+              <li>Muele el choclo hasta conseguir una mezcla espesa.</li>
+              <li>Añade mantequilla, sal y queso desmenuzado.</li>
+              <li>Coloca la mezcla en chalas o en un recipiente para horno.</li>
+              <li>Hornea hasta que esté firme y ligeramente dorada.</li>
+            </ol>
+          </article>
+
+          <article class="recipe">
+            <h3>Llajwa casera</h3>
+            <h4>Ingredientes</h4>
+            <ul>
+              <li>Tomates maduros.</li>
+              <li>Locoto al gusto.</li>
+              <li>Quirquiña o huacataya.</li>
+              <li>Una pizca de sal.</li>
+            </ul>
+            <h4>Preparación</h4>
+            <ol>
+              <li>Lava bien los ingredientes.</li>
+              <li>Muele o tritura los tomates y el locoto.</li>
+              <li>Añade las hierbas y la sal.</li>
+              <li>Mezcla y sirve fresca como acompañamiento.</li>
+            </ol>
+          </article>
+
+          <article class="recipe">
+            <h3>Api morado</h3>
+            <h4>Ingredientes</h4>
+            <ul>
+              <li>Harina de maíz morado para api.</li>
+              <li>Agua.</li>
+              <li>Canela y clavo de olor.</li>
+              <li>Azúcar al gusto.</li>
+            </ul>
+            <h4>Preparación</h4>
+            <ol>
+              <li>Disuelve la harina en un poco de agua fría.</li>
+              <li>Hierve el resto del agua con canela y clavo.</li>
+              <li>Agrega la harina disuelta y remueve constantemente.</li>
+              <li>Cocina hasta que espese y endulza al gusto.</li>
+            </ol>
+          </article>
+
+          <article class="recipe">
+            <h3>Ensalada tradicional</h3>
+            <h4>Ingredientes</h4>
+            <ul>
+              <li>Tomate.</li>
+              <li>Cebolla.</li>
+              <li>Locoto opcional.</li>
+              <li>Limón y sal.</li>
+            </ul>
+            <h4>Preparación</h4>
+            <ol>
+              <li>Lava cuidadosamente las verduras.</li>
+              <li>Corta el tomate y la cebolla.</li>
+              <li>Agrega locoto si deseas.</li>
+              <li>Condimenta con limón y sal antes de servir.</li>
+            </ol>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="preservar">
+      <div class="section-inner">
+
+        <div class="section-heading">
+          <span class="eyebrow" style="color:#a9432b">
+            Nuestro patrimonio
+          </span>
+
+          <h2>Preservación de la gastronomía boliviana</h2>
+
+          <p>
+            Preservar la gastronomía significa proteger las recetas,
+            los ingredientes y los conocimientos que forman parte
+            de nuestra identidad cultural.
+          </p>
+        </div>
+
+        <div class="steps">
+
+          <article class="step">
+            <div class="step-number">01</div>
+            <h3>Aprender de la familia</h3>
+            <p>Preguntar a nuestros abuelos y padres cómo preparan las comidas tradicionales.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">02</div>
+            <h3>Registrar las recetas</h3>
+            <p>Escribir los ingredientes y pasos de preparación para que no se pierdan con el tiempo.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">03</div>
+            <h3>Compartir la cultura</h3>
+            <p>Organizar ferias gastronómicas y actividades escolares para dar a conocer nuestros platos.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">04</div>
+            <h3>Apoyar a productores</h3>
+            <p>Valorar los productos nacionales y el trabajo de agricultores y vendedores locales.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">05</div>
+            <h3>Utilizar la tecnología</h3>
+            <p>Crear páginas web, fotografías y recetarios digitales para compartir los conocimientos gastronómicos.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">06</div>
+            <h3>Incluir a los jóvenes</h3>
+            <p>Motivar a los estudiantes a conocer, preparar y valorar los platos típicos de sus regiones.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="promise" id="compromiso">
+      <div class="section-inner">
+
+        <span class="eyebrow">Nuestro compromiso</span>
+
+        <h2>Una receta también es una memoria</h2>
+
+        <p>
+          Como estudiantes, podemos contribuir a preservar la gastronomía
+          boliviana investigando, aprendiendo de nuestras familias y
+          compartiendo información mediante esta página web.
+          De esta manera ayudamos a que las futuras generaciones
+          conozcan y valoren nuestra riqueza cultural.
+        </p>
+
+        <a class="button" href="#inicio">Volver al inicio ↑</a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Riqueza Gastronómica de Bolivia</strong></p>
+    <p>Proyecto educativo sobre la conservación de los platos típicos.</p>
+    <p>La gastronomía es parte de nuestra identidad y merece ser preservada.</p>
+  </footer>
+
+  <!-- Script sencillo para desplegar el menú en dispositivos móviles -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Cierra el menú automáticamente al hacer clic en una opción (en móviles)
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
